@@ -1,5 +1,11 @@
 package main.structure.contracts;
 
-public interface IEdge {
+/**
+ * Edge interface of this graphlib
+ * @author Nicácio Oliveira
+ *
+ * @param <T>
+ */
+public interface IEdge<T extends Comparable<T>> {
 
 }

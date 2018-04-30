@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.Comparator;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -21,7 +23,7 @@ public class Graph <T extends Comparable<T>> implements Comparator<Graph <T>>, I
 	}
 	
 	public Graph() {
-		this.vertex = new HashSet<Vertex<T>>();
+		this.vertex = new HashSet<>();
 	}
 	
 	@Override
@@ -61,7 +63,7 @@ public class Graph <T extends Comparable<T>> implements Comparator<Graph <T>>, I
 		// first line is qtt of the edges
 		//this.edges_number = Integer.parseInt(sc.nextLine());
 		//
-		sc.hasNextLine();
+		sc.nextLine();
 		
 		while (sc.hasNextLine()) {
 			String[] line = sc.nextLine().split(" ");
@@ -167,6 +169,16 @@ public class Graph <T extends Comparable<T>> implements Comparator<Graph <T>>, I
 	public String MST() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public String toString() {
+		String resp = "";
+		for (Vertex<T> v : vertex) {
+			resp += v.getValue() + " - " + v.getAdjacencyList();
+			resp += "\n";
+		}
+		return resp;
 	}
 
 }

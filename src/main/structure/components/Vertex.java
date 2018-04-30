@@ -4,7 +4,6 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
-import main.structure.contracts.IEdge;
 import main.structure.contracts.IVertex;
 
 public class Vertex <T extends Comparable<T>> implements Comparator<Vertex <T>>, IVertex{
@@ -32,15 +31,13 @@ public class Vertex <T extends Comparable<T>> implements Comparator<Vertex <T>>,
 	}
 
 	@Override
-	public void addEdge(IEdge edge) {
-		// TODO Auto-generated method stub
-		
+	public void addEdge(Edge edge) {
+		if (edge != null) adjacencyList.add(edge);
 	}
 
 	@Override
-	public void removeEdge(IEdge edge) {
-		// TODO Auto-generated method stub
-		
+	public void removeEdge(Edge edge) {
+		if (edge != null) adjacencyList.remove(edge);
 	}
 
 	public T getValue() {
@@ -61,8 +58,6 @@ public class Vertex <T extends Comparable<T>> implements Comparator<Vertex <T>>,
 
 	@Override
 	public String toString() {
-		return this.value.toString() + " - " + this.adjacencyList.toString();
+		return this.value.toString();
 	}
-	
-
 }

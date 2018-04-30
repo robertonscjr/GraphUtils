@@ -46,7 +46,6 @@ public class Edge <T extends Comparable<T>> implements IEdge{
 	public String toString() {
 		String resp = source + "-->" + destination;
 		if (this.weight != null) resp += "(" + this.weight + ")";
-		
 		return resp;
 	}
 	

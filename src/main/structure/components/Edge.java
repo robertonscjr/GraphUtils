@@ -2,7 +2,7 @@ package main.structure.components;
 
 import main.structure.contracts.IEdge;
 
-public class Edge <T extends Comparable<T>> implements IEdge<T>{
+public class Edge <T extends Comparable<T>> implements IEdge{
 
 	private Float weight;
 	private Vertex<T> source, destination;

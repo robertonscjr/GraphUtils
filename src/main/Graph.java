@@ -1,6 +1,9 @@
 package main;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 
 import java.util.HashSet;
@@ -13,8 +16,15 @@ import main.contracts.IGraph;
 import main.structure.components.*;
 
 
-
 public class Graph <T extends Comparable<T>> implements Comparator<Graph <T>>, IGraph {
+	public enum RepresentationType {
+	    ADJACENCYMATRIX("AM"),ADJACENCYLIST("AL");
+
+	    public String rt;
+	    RepresentationType(String rt) {
+	        this.rt = rt;
+	    }
+	}
 
 	private Set<Vertex<T>> vertex;
 	
@@ -51,6 +61,7 @@ public class Graph <T extends Comparable<T>> implements Comparator<Graph <T>>, I
 			T source  = (T) line[0];
 			T destination 	= (T) line[1];
 			addEdge(source, destination);
+			addEdge(destination, source);
 		}
 	}
 	
@@ -67,54 +78,49 @@ public class Graph <T extends Comparable<T>> implements Comparator<Graph <T>>, I
 		
 		while (sc.hasNextLine()) {
 			String[] line = sc.nextLine().split(" ");
-			if (line.length > 3) throw new Exception("Invalide Format File!");
+			if (line.length > 3) throw new Exception("Invalid Format File!");
 			
 			T src = (T) line[0];
 			T destination = (T) line[1];
 			Float weight = Float.parseFloat(line[2]);
 			
 			addWeightedEdge(weight, src, destination);
+			addWeightedEdge(weight, destination, src);
 		}
 			
 	}
 	
 
-	private void addWeightedEdge(Float weight, T source, T destination) {
+	public void addWeightedEdge(Float weight, T source, T destination) {
 		Vertex<T> src = getVertex(source);
 		Vertex<T> dest = getVertex(destination);
 		
 		if (src == null) src = addVertex(source);
 		if (dest == null) dest = addVertex(destination);
-		
-		// --
 		
 		Edge<T> e = new Edge<T>(weight, src, dest);
 		src.addEdge(e);
 	}
 
-	private void addEdge(T source, T destination) {
+	public void addEdge(T source, T destination) {
 		Vertex<T> src = getVertex(source);
 		Vertex<T> dest = getVertex(destination);
 		
 		if (src == null) src = addVertex(source);
 		if (dest == null) dest = addVertex(destination);
 		
-		// --
-		
 		Edge<T> e = new Edge<T>(src, dest);
 		src.addEdge(e);
-		//from.add_v_adj(e);
-		//edges.add(e);
 		
 	}
 
-	private Vertex<T> addVertex(T value) {
+	public Vertex<T> addVertex(T value) {
 		Vertex<T> v = new Vertex<T>(value);
 		vertex.add(v);
 		return v;
 	}
 	
-	private Vertex<T> getVertex(T value) {
+	public Vertex<T> getVertex(T value) {
 		for (Vertex<T> v : vertex)
 			if (v.getValue().equals(value))
 				return v;
@@ -125,49 +131,94 @@ public class Graph <T extends Comparable<T>> implements Comparator<Graph <T>>, I
 
 	@Override
 	public int getVertexNumber() {
-		// TODO Auto-generated method stub
-		return 0;
+		return vertex.size();
 	}
 
 	@Override
 	public int getEdgeNumber() {
-		// TODO Auto-generated method stub
-		return 0;
+		int edgeNumber = 0;
+		
+		for (Vertex<T> v : vertex) {
+			edgeNumber += v.getAdjacencyList().size();
+		}
+		
+		return edgeNumber;
 	}
 
 	@Override
 	public float getMeanEdge() {
-		// TODO Auto-generated method stub
-		return 0;
+		return 2 * getEdgeNumber() / getVertexNumber();
 	}
 
 	@Override
 	public String BFS(Vertex<?> vertex) {
-		// TODO Auto-generated method stub
+		// TODO @Andre
 		return null;
 	}
 
 	@Override
 	public String DFS(Vertex<?> vertex) {
-		// TODO Auto-generated method stub
+		// TODO @Nicacio
 		return null;
 	}
 
 	@Override
 	public String SCC() {
-		// TODO Auto-generated method stub
+		// TODO @Lucas
 		return null;
 	}
 
 	@Override
 	public String shortestPath(Vertex<?> v1, Vertex<?> v2) {
-		// TODO Auto-generated method stub
+		// TODO @Ionesio
 		return null;
 	}
 
 	@Override
 	public String MST() {
-		// TODO Auto-generated method stub
+		// TODO @Andre
+		return null;
+	}
+	
+	@Override
+	public String graphRepresentation(RepresentationType rt) {
+		String resp = "";
+		
+		if (rt.equals(RepresentationType.ADJACENCYLIST)) {
+			resp = representationAdjList();
+		}
+		else if (rt.equals(RepresentationType.ADJACENCYMATRIX)) {
+			resp = representationAdjMatrix();
+		}
+		else {
+			// TODO: RepresentationNotAvaliableException
+		}
+		
+		return resp;
+	}
+	
+	private String representationAdjList() {
+		String resp = "";
+		
+		// TODO: Sort vertexes		
+		for (Vertex<T> v : vertex) {
+			resp += v.getValue() +" -" + v.getAdjacencyListRepresentation() + "\n";
+		}
+		
+		return resp;
+	}
+	
+	private String representationAdjMatrix() {
+		// TODO: Implementation of adjacency matrix
+		//       Obs: The type of this class should be Integer
+				
+		return "";
+	}
+	
+	private T maxVertex() {
+		// TODO: Search the maximum vertex of graph
+		//       Obs: Try it to use compareTo
+		
 		return null;
 	}
 	

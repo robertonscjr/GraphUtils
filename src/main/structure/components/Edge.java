@@ -18,7 +18,7 @@ public class Edge <T extends Comparable<T>> implements IEdge{
 		this.destination = destination;
 	}
 
-	public float getWeight() {
+	public Float getWeight() {
 		return weight;
 	}
 

@@ -1,5 +1,6 @@
 package main.contracts;
 
+import main.Graph.RepresentationType;
 import main.structure.components.Vertex;
 
 public interface IGraph {
@@ -13,4 +14,5 @@ public interface IGraph {
 	String SCC();
 	String shortestPath(Vertex<?> v1, Vertex<?> v2);
 	String MST();
+	String graphRepresentation(RepresentationType rt);
 }

@@ -55,6 +55,18 @@ public class Vertex <T extends Comparable<T>> implements Comparator<Vertex <T>>,
 	public void setAdjacencyList(List<Edge<T>> adjacencyList) {
 		this.adjacencyList = adjacencyList;
 	}
+	
+	public String getAdjacencyListRepresentation() {
+		String resp = "";
+		
+		for (Edge<T> edge : adjacencyList) {
+			resp += " " + edge.getDestination().value;
+			
+			if (edge.getWeight() != null) resp += "(" + edge.getWeight() + ")";
+		}
+		
+		return resp;
+	}
 
 	@Override
 	public String toString() {

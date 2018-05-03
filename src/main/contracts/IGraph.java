@@ -3,8 +3,8 @@ package main.contracts;
 import main.structure.components.Vertex;
 
 public interface IGraph {
-	void readGraph(String pathFile);
-	void readWeightedGraph(String pathFile);
+	void readGraph(String pathFile) throws Exception;
+	void readWeightedGraph(String pathFile) throws Exception;
 	int getVertexNumber();
 	int getEdgeNumber();
 	float getMeanEdge();

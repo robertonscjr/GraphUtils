@@ -2,7 +2,7 @@ package main.structure.components;
 
 import main.structure.contracts.IEdge;
 
-public class Edge <T extends Comparable<T>> implements IEdge<T>{
+public class Edge <T extends Comparable<T>> implements IEdge{
 
 	private Float weight;
 	private Vertex<T> source, destination;
@@ -46,7 +46,6 @@ public class Edge <T extends Comparable<T>> implements IEdge<T>{
 	public String toString() {
 		String resp = source + "-->" + destination;
 		if (this.weight != null) resp += "(" + this.weight + ")";
-		
 		return resp;
 	}
 	

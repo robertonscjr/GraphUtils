@@ -1,6 +1,7 @@
 package main;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -152,8 +153,35 @@ public class Graph <T extends Comparable<T>> implements Comparator<Graph <T>>, I
 
 	@Override
 	public String BFS(Vertex<?> vertex) {
-		// TODO @Andre
-		return null;
+		
+		Set<Vertex<T>> nonvisited = this.vertex;
+		
+		nonvisited.remove(vertex);
+		
+		String message = (String) vertex.getValue();
+		
+		List<Vertex<?>> queued = new ArrayList<Vertex<?>>();
+		
+		for (Edge<?> edge : vertex.getAdjacencyList()) {
+			if (edge.getSource().equals(vertex)) {
+				queued.add(edge.getDestination());
+				nonvisited.remove(edge.getDestination());
+			}
+		}
+		
+		for (int i = 0; i < this.vertex.size() - 2; i++) {
+			for (Edge<?> edge : vertex.getAdjacencyList()) {
+				if (edge.getSource().equals(queued.get(i))) {
+					if (nonvisited.contains(edge.getSource())) {
+						queued.add(edge.getDestination());
+						nonvisited.remove(edge.getDestination());
+					}
+				}
+			}
+			message = message + " " + queued.get(i).getValue();
+		}
+		
+	return message;
 	}
 
 	@Override
@@ -177,6 +205,11 @@ public class Graph <T extends Comparable<T>> implements Comparator<Graph <T>>, I
 	@Override
 	public String MST() {
 		// TODO @Andre
+		
+		// Edge<?>[] edges = new Edge<?>[this.getEdgeNumber()];
+		
+		// precisa de acesso a lista de adjacencia.
+		
 		return null;
 	}
 	

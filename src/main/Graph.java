@@ -211,15 +211,50 @@ public class Graph <T extends Comparable<T>> implements Comparator<Graph <T>>, I
 	private String representationAdjMatrix() {
 		// TODO: Implementation of adjacency matrix
 		//       Obs: The type of this class should be Integer
+		String resp = "";
+		
+		int max = maxVertex() + 1;
+		float[][] adjMatrix = new float[max][max];
+		
+		// To each vertex (represented by line), mark the matrix with adjacency list (represented by column)
+		for (Vertex<T> v : vertex) {
+			int line = Integer.parseInt((String) v.getValue());
+			
+			for (Edge<T> e : v.getAdjacencyList()) {
+				int column = Integer.parseInt((String) e.getDestination().getValue());
 				
-		return "";
+				adjMatrix[line][column] = (e.getWeight() == null) ? (1) : e.getWeight();
+			}
+		}
+		
+		for (int i = 0; i < max; i++) {
+			for (int j = 0; j < max; j++) {
+				resp += ((j == 0) ? "" : " ") + adjMatrix[i][j];
+			}
+			resp += "\n";
+		}
+		
+		return resp;
 	}
 	
-	private T maxVertex() {
+	private int maxVertex() {
 		// TODO: Search the maximum vertex of graph
 		//       Obs: Try it to use compareTo
 		
-		return null;
+		Object[] vertexArray = vertex.toArray();
+		int[] values = new int[vertexArray.length];
+		
+		for (int i = 0; i < vertexArray.length; i++)
+			values[i] = Integer.parseInt((String) ((Vertex<T>) vertexArray[i]).getValue());
+		
+		int max = values[0];
+		
+		for (int v : values) {
+			if (v > max)
+				max = v;
+		}
+		
+		return max;
 	}
 	
 	@Override

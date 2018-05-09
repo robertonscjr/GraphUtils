@@ -1,14 +1,7 @@
 package main;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -16,15 +9,8 @@ import main.contracts.IGraph;
 import main.structure.components.*;
 
 
-public class Graph <T extends Comparable<T>> implements Comparator<Graph <T>>, IGraph {
-	public enum RepresentationType {
-	    ADJACENCYMATRIX("AM"),ADJACENCYLIST("AL");
-
-	    public String rt;
-	    RepresentationType(String rt) {
-	        this.rt = rt;
-	    }
-	}
+public class Graph <T> implements IGraph<T> {
+	
 
 	private Set<Vertex<T>> vertex;
 	
@@ -35,18 +21,14 @@ public class Graph <T extends Comparable<T>> implements Comparator<Graph <T>>, I
 	public Graph() {
 		this.vertex = new HashSet<>();
 	}
-	
-	@Override
-	public int compare(Graph<T> o1, Graph<T> o2) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+
 	
 	// ============================== READ GRAPH ==============================
 	@Override
 	public void readGraph(String pathFile) throws Exception {
 		File file = new File(pathFile);
 		
+		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(file);
 		
 		// first line is qtt of the edges
@@ -58,10 +40,10 @@ public class Graph <T extends Comparable<T>> implements Comparator<Graph <T>>, I
 			String[] line = sc.nextLine().split(" ");
 			if (line.length > 2) throw new Exception("Invalide Format File!");
 			
-			T source  = (T) line[0];
-			T destination 	= (T) line[1];
-			addEdge(source, destination);
-			addEdge(destination, source);
+			Long srcIndex = Long.parseLong(line[0]);
+			Long destinationIndex = Long.parseLong(line[1]);
+			addEdge(srcIndex, destinationIndex);
+			addEdge(destinationIndex, srcIndex);
 		}
 	}
 	
@@ -69,6 +51,7 @@ public class Graph <T extends Comparable<T>> implements Comparator<Graph <T>>, I
 	public void readWeightedGraph(String pathFile) throws Exception {
 		File file = new File(pathFile);
 		
+		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(file);
 		
 		// first line is qtt of the edges
@@ -80,18 +63,18 @@ public class Graph <T extends Comparable<T>> implements Comparator<Graph <T>>, I
 			String[] line = sc.nextLine().split(" ");
 			if (line.length > 3) throw new Exception("Invalid Format File!");
 			
-			T src = (T) line[0];
-			T destination = (T) line[1];
+			Long srcIndex = Long.parseLong(line[0]);
+			Long destinationIndex = Long.parseLong(line[1]);
 			Float weight = Float.parseFloat(line[2]);
 			
-			addWeightedEdge(weight, src, destination);
-			addWeightedEdge(weight, destination, src);
+			addWeightedEdge(weight, srcIndex, destinationIndex);
+			addWeightedEdge(weight, destinationIndex, srcIndex);
 		}
 			
 	}
 	
 
-	public void addWeightedEdge(Float weight, T source, T destination) {
+	public void addWeightedEdge(Float weight, Long source, Long destination) {
 		Vertex<T> src = getVertex(source);
 		Vertex<T> dest = getVertex(destination);
 		
@@ -102,7 +85,7 @@ public class Graph <T extends Comparable<T>> implements Comparator<Graph <T>>, I
 		src.addEdge(e);
 	}
 
-	public void addEdge(T source, T destination) {
+	public void addEdge(Long source, Long destination) {
 		Vertex<T> src = getVertex(source);
 		Vertex<T> dest = getVertex(destination);
 		
@@ -114,15 +97,15 @@ public class Graph <T extends Comparable<T>> implements Comparator<Graph <T>>, I
 		
 	}
 
-	public Vertex<T> addVertex(T value) {
-		Vertex<T> v = new Vertex<T>(value);
+	public Vertex<T> addVertex(Long index) {
+		Vertex<T> v = new Vertex<T>(index);
 		vertex.add(v);
 		return v;
 	}
 	
-	public Vertex<T> getVertex(T value) {
+	public Vertex<T> getVertex(Long index) {
 		for (Vertex<T> v : vertex)
-			if (v.getValue().equals(value))
+			if (v.getIndex().equals(index))
 				return v;
 		return null;
 	}
@@ -151,13 +134,13 @@ public class Graph <T extends Comparable<T>> implements Comparator<Graph <T>>, I
 	}
 
 	@Override
-	public String BFS(Vertex<?> vertex) {
+	public String BFS(Vertex<T> vertex) {
 		// TODO @Andre
 		return null;
 	}
 
 	@Override
-	public String DFS(Vertex<?> vertex) {
+	public String DFS(Vertex<T> vertex) {
 		// TODO @Nicacio
 		return null;
 	}
@@ -169,7 +152,7 @@ public class Graph <T extends Comparable<T>> implements Comparator<Graph <T>>, I
 	}
 
 	@Override
-	public String shortestPath(Vertex<?> v1, Vertex<?> v2) {
+	public String shortestPath(Vertex<T> v1, Vertex<T> v2) {
 		// TODO @Ionesio
 		return null;
 	}
@@ -215,6 +198,7 @@ public class Graph <T extends Comparable<T>> implements Comparator<Graph <T>>, I
 		return "";
 	}
 	
+	@SuppressWarnings("unused")
 	private T maxVertex() {
 		// TODO: Search the maximum vertex of graph
 		//       Obs: Try it to use compareTo
@@ -226,10 +210,9 @@ public class Graph <T extends Comparable<T>> implements Comparator<Graph <T>>, I
 	public String toString() {
 		String resp = "";
 		for (Vertex<T> v : vertex) {
-			resp += v.getValue() + " - " + v.getAdjacencyList();
+			resp += v.getIndex() + " - " + v.getAdjacencyList();
 			resp += "\n";
 		}
 		return resp;
 	}
-
 }

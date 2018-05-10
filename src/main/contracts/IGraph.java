@@ -1,18 +1,18 @@
 package main.contracts;
 
-import main.Graph.RepresentationType;
+import main.structure.components.RepresentationType;
 import main.structure.components.Vertex;
 
-public interface IGraph {
+public interface IGraph<T> {
 	void readGraph(String pathFile) throws Exception;
 	void readWeightedGraph(String pathFile) throws Exception;
 	int getVertexNumber();
 	int getEdgeNumber();
 	float getMeanEdge();
-	String BFS(Vertex<?> vertex);
-	String DFS(Vertex<?> vertex);
+	String BFS(Vertex<T> vertex);
+	String DFS(Vertex<T> vertex);
 	String SCC();
-	String shortestPath(Vertex<?> v1, Vertex<?> v2);
+	String shortestPath(Vertex<T> v1, Vertex<T> v2);
 	String MST();
 	String graphRepresentation(RepresentationType rt);
 }

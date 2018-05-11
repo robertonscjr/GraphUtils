@@ -7,6 +7,7 @@ import java.util.Set;
 
 import main.contracts.IGraph;
 import main.structure.components.*;
+import main.structure.components.enums.RepresentationType;
 
 
 public class Graph <T> implements IGraph<T> {

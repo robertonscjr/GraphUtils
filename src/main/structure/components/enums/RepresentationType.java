@@ -1,4 +1,4 @@
-package main.structure.components;
+package main.structure.components.enums;
 
 public enum RepresentationType {
 	ADJACENCYMATRIX("AM"),ADJACENCYLIST("AL");

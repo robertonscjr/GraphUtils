@@ -1,7 +1,7 @@
 package main.contracts;
 
-import main.structure.components.RepresentationType;
 import main.structure.components.Vertex;
+import main.structure.components.enums.RepresentationType;
 
 public interface IGraph<T> {
 	void readGraph(String pathFile) throws Exception;

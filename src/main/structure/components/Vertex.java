@@ -1,45 +1,50 @@
 package main.structure.components;
 
-import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
 
 import main.structure.contracts.IVertex;
 
-public class Vertex <T extends Comparable<T>> implements Comparator<Vertex <T>>, IVertex{
+public class Vertex <T> implements IVertex<T>{
 
+	private Long index;
 	private T value;
 	private List<Edge<T>> adjacencyList;
 	
-	public Vertex() {
+	public Vertex(Long index) {
+		this.index = index;
 		this.adjacencyList = new LinkedList<Edge<T>>();
 	}
 	
-	public Vertex(T value) {
+	public Vertex(Long index, T value) {
+		this.index = index;
 		this.value = value;
 		this.adjacencyList = new LinkedList<Edge<T>>();
 	}
 	
-	public Vertex(T value, LinkedList<Edge<T>> adjacencyList) {
+	public Vertex(Long index, T value, LinkedList<Edge<T>> adjacencyList) {
 		this.value = value;
 		this.adjacencyList = adjacencyList;
 	}
-		
-	@Override
-	public int compare(Vertex<T> o1, Vertex<T> o2) {
-		return o1.value.compareTo(o2.value);
-	}
 
 	@Override
-	public void addEdge(Edge edge) {
+	public void addEdge(Edge<T> edge) {
 		if (edge != null) adjacencyList.add(edge);
 	}
 
 	@Override
-	public void removeEdge(Edge edge) {
+	public void removeEdge(Edge<T> edge) {
 		if (edge != null) adjacencyList.remove(edge);
 	}
 
+	public Long getIndex() {
+		return index;
+	}
+
+	public void setIndex(Long index) {
+		this.index = index;
+	}
+	
 	public T getValue() {
 		return value;
 	}
@@ -60,7 +65,7 @@ public class Vertex <T extends Comparable<T>> implements Comparator<Vertex <T>>,
 		String resp = "";
 		
 		for (Edge<T> edge : adjacencyList) {
-			resp += " " + edge.getDestination().value;
+			resp += " " + edge.getDestination().index;
 			
 			if (edge.getWeight() != null) resp += "(" + edge.getWeight() + ")";
 		}
@@ -70,6 +75,6 @@ public class Vertex <T extends Comparable<T>> implements Comparator<Vertex <T>>,
 
 	@Override
 	public String toString() {
-		return this.value.toString();
+		return this.index.toString();
 	}
 }

@@ -186,7 +186,7 @@ public class Graph <T> implements IGraph<T> {
 		
 		// TODO: Sort vertexes		
 		for (Vertex<T> v : vertex) {
-			resp += v.getValue() +" -" + v.getAdjacencyListRepresentation() + "\n";
+			resp += v.getIndex() +" -" + v.getAdjacencyListRepresentation() + "\n";
 		}
 		
 		return resp;
@@ -202,10 +202,10 @@ public class Graph <T> implements IGraph<T> {
 		
 		// To each vertex (represented by line), mark the matrix with adjacency list (represented by column)
 		for (Vertex<T> v : vertex) {
-			int line = Integer.parseInt((String) v.getValue());
+			int line = v.getIndex().intValue();
 			
 			for (Edge<T> e : v.getAdjacencyList()) {
-				int column = Integer.parseInt((String) e.getDestination().getValue());
+				int column = v.getIndex().intValue();
 				
 				adjMatrix[line][column] = (e.getWeight() == null) ? (1) : e.getWeight();
 			}
@@ -230,7 +230,7 @@ public class Graph <T> implements IGraph<T> {
 		int[] values = new int[vertexArray.length];
 		
 		for (int i = 0; i < vertexArray.length; i++)
-			values[i] = Integer.parseInt((String) ((Vertex<T>) vertexArray[i]).getValue());
+			values[i] = ((Vertex<T>) vertexArray[i]).getIndex().intValue();
 		
 		int max = values[0];
 		

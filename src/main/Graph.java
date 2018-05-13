@@ -9,6 +9,8 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.Stack;
 
+import exception.GraphFormatFileException;
+import exception.WeightedGraphFormatFileException;
 import main.contracts.IGraph;
 import main.structure.components.*;
 import main.structure.components.enums.RepresentationType;
@@ -35,16 +37,16 @@ public class Graph <T> implements IGraph<T> {
 		
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(file);
+
+		if (!checkGraphFormatFile(sc, false))
+			throw new GraphFormatFileException();
 		
+		sc = new Scanner(file);
 		// first line is qtt of the edges
-		//this.edges_number = Integer.parseInt(sc.nextLine());
-		//
 		sc.nextLine();
 		
 		while (sc.hasNextLine()) {
 			String[] line = sc.nextLine().split(" ");
-			if (line.length > 2) throw new Exception("Invalide Format File!");
-			
 			Long srcIndex = Long.parseLong(line[0]);
 			Long destinationIndex = Long.parseLong(line[1]);
 			addEdge(srcIndex, destinationIndex);
@@ -59,14 +61,15 @@ public class Graph <T> implements IGraph<T> {
 		@SuppressWarnings("resource")
 		Scanner sc = new Scanner(file);
 		
+		if (!checkGraphFormatFile(sc, true))
+			throw new WeightedGraphFormatFileException();
+		
+		sc = new Scanner(file);
 		// first line is qtt of the edges
-		//this.edges_number = Integer.parseInt(sc.nextLine());
-		//
 		sc.nextLine();
 		
 		while (sc.hasNextLine()) {
 			String[] line = sc.nextLine().split(" ");
-			if (line.length > 3) throw new Exception("Invalid Format File!");
 			
 			Long srcIndex = Long.parseLong(line[0]);
 			Long destinationIndex = Long.parseLong(line[1]);
@@ -75,7 +78,17 @@ public class Graph <T> implements IGraph<T> {
 			addWeightedEdge(weight, srcIndex, destinationIndex);
 			addWeightedEdge(weight, destinationIndex, srcIndex);
 		}
-			
+	}
+	
+	private boolean checkGraphFormatFile(Scanner sc , boolean weighted) {
+		sc.nextLine();
+		while (sc.hasNext()) {
+			if (!weighted && sc.nextLine().split(" ").length != 2)
+				return false;
+			else if (weighted && sc.nextLine().split(" ").length != 3)
+				return false;
+		}
+		return true;
 	}
 	
 

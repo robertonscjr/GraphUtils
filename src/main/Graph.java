@@ -1,9 +1,13 @@
 package main;
 
 import java.io.File;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.Stack;
 
 import main.contracts.IGraph;
 import main.structure.components.*;
@@ -142,10 +146,44 @@ public class Graph <T> implements IGraph<T> {
 
 	@Override
 	public String DFS(Vertex<T> vertex) {
-		// TODO @Nicacio
-		return null;
+		
+		if (vertex != null)
+			return dfs(vertex);
+		
+		return "";
+	}
+	
+	private String dfs(Vertex<T> vertex) {
+		String resp = "";
+		Stack<Edge<T>> stack = new Stack<>();
+	
+		ArrayList<Vertex<T>> visited = new ArrayList<>();
+		
+		
+		stack.add(new Edge<>(vertex, vertex));
+		visited.add(vertex);
+		
+		while (!stack.isEmpty()) {
+			Edge<T> v = stack.pop();
+			
+			if (v.getDestination().equals(v.getSource()))
+				resp += v.getDestination() + " - - " + stack.size() + "\n";
+			else
+				resp += v.getDestination() + " - " + v.getSource() + " " + stack.size() + "\n";
+			
+			for (Edge<T> e : v.getDestination().getAdjacencyList()) {
+				if (e.getDestination() != null && !visited.contains(e.getDestination())) {
+					stack.add(e);
+					visited.add(e.getDestination());
+				}
+			}
+			
+		}
+		return resp;
 	}
 
+	
+	
 	@Override
 	public String SCC() {
 		// TODO @Lucas

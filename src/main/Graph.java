@@ -14,6 +14,7 @@ import java.util.Set;
 import java.util.Stack;
 
 import exception.GraphFormatFileException;
+import exception.InvalidGraphRepresentationException;
 import exception.WeightedGraphFormatFileException;
 import main.contracts.IGraph;
 import main.structure.components.*;
@@ -255,7 +256,7 @@ public class Graph <T> implements IGraph<T> {
 	}
 	
 	@Override
-	public String graphRepresentation(RepresentationType rt) {
+	public String graphRepresentation(RepresentationType rt) throws Exception {
 		String resp = "";
 		
 		if (rt.equals(RepresentationType.ADJACENCYLIST)) {
@@ -265,7 +266,7 @@ public class Graph <T> implements IGraph<T> {
 			resp = representationAdjMatrix();
 		}
 		else {
-			// TODO: RepresentationNotAvaliableException
+			throw new InvalidGraphRepresentationException();
 		}
 		
 		return resp;

@@ -159,7 +159,38 @@ public class Graph <T> implements IGraph<T> {
 	@Override
 	public String BFS(Vertex<T> vertex) {
 		// TODO @Andre
-		return null;
+		return bfs(vertex);
+	}
+	
+	private String bfs(Vertex<T> vertex) {
+		String resp = "";
+		Queue<Edge<T>> queue = new LinkedList<>();
+		int level = 0;
+		ArrayList<Vertex<T>> visited = new ArrayList<>();
+		
+		
+		queue.add(new Edge<>(vertex, vertex));
+		visited.add(vertex);
+		
+		while (!queue.isEmpty()) {
+			Edge<T> v = queue.poll();
+			
+			if (v.getDestination().equals(v.getSource()))
+				resp += v.getDestination() + " - - " + level + "\n";
+			else
+				resp += v.getDestination() + " - " + level + " " + v.getSource() + "\n";
+			
+			if (queue.isEmpty()) level++;
+			
+			for (Edge<T> e : v.getDestination().getAdjacencyList()) {
+				if (e.getDestination() != null && !visited.contains(e.getDestination())) {
+					queue.add(e);
+					visited.add(e.getDestination());
+				}
+			}
+			
+		}
+		return resp;
 	}
 
 	@Override

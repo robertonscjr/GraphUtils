@@ -14,5 +14,5 @@ public interface IGraph<T> {
 	String SCC();
 	String shortestPath(Vertex<T> v1, Vertex<T> v2);
 	String MST();
-	String graphRepresentation(RepresentationType rt);
+	String graphRepresentation(RepresentationType rt) throws Exception;
 }

@@ -10,10 +10,12 @@ public class Vertex <T> implements IVertex<T>{
 	private Long index;
 	private T value;
 	private List<Edge<T>> adjacencyList;
+	private double distance;
 	
 	public Vertex(Long index) {
 		this.index = index;
 		this.adjacencyList = new LinkedList<Edge<T>>();
+		this.distance = Double.MAX_VALUE;
 	}
 	
 	public Vertex(Long index, T value) {
@@ -32,6 +34,14 @@ public class Vertex <T> implements IVertex<T>{
 		if (edge != null) adjacencyList.add(edge);
 	}
 
+	public Boolean relaxDistance(double distanceValue) {
+		if( distanceValue < this.distance) {
+			this.distance = distanceValue;
+			return true;
+		}
+		return false;
+	}
+	
 	@Override
 	public void removeEdge(Edge<T> edge) {
 		if (edge != null) adjacencyList.remove(edge);
@@ -49,6 +59,9 @@ public class Vertex <T> implements IVertex<T>{
 		return value;
 	}
 
+	public double getDistance() {
+		return this.distance;
+	}
 	public void setValue(T value) {
 		this.value = value;
 	}

@@ -4,7 +4,11 @@ import java.io.File;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.Stack;
@@ -206,7 +210,42 @@ public class Graph <T> implements IGraph<T> {
 	@Override
 	public String shortestPath(Vertex<T> v1, Vertex<T> v2) {
 		// TODO @Ionesio
-		return null;
+		String response = "";
+		if( this.vertex.contains(v1) && this.vertex.contains(v2)) {
+			Queue<Vertex<T>> vertexQueue = new ArrayDeque<>();
+			ArrayList<Vertex<T>> visited = new ArrayList<>();
+			HashMap<String,String> reversePath = new HashMap<>();
+			v1.relaxDistance(0);
+			vertexQueue.add(v1);
+			
+			while(!vertexQueue.isEmpty()) {
+				Vertex<T> currentVertex = vertexQueue.remove();
+				visited.add(currentVertex);
+				for(Edge<T> e : currentVertex.getAdjacencyList()) {
+					if(!visited.contains(e.getDestination())) {
+						Vertex<T> nextVertex = e.getDestination();
+						double expectedDistance = currentVertex.getDistance();
+						expectedDistance += e.getWeight();
+						Boolean update = nextVertex.relaxDistance( expectedDistance );
+						if(update) {
+							reversePath.put(nextVertex.getIndex().toString(), currentVertex.getIndex().toString());
+						}
+						vertexQueue.add(nextVertex);
+					}
+				}
+			}
+			
+			String predecessor = v2.getIndex().toString();
+			response += predecessor + " ";
+			while(reversePath.get(predecessor) != null) {
+				response = reversePath.get(predecessor)  + " " + response;
+				predecessor = reversePath.get(predecessor);
+			}
+		}else {
+			return "";
+		}
+		
+		return response;
 	}
 
 	@Override

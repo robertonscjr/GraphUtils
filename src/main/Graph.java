@@ -152,7 +152,7 @@ public class Graph <T> implements IGraph<T> {
 			edgeNumber += v.getAdjacencyList().size();
 		}
 		
-		return edgeNumber;
+		return edgeNumber / 2;
 	}
 
 	@Override

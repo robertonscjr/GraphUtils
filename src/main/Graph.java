@@ -238,31 +238,68 @@ public class Graph <T> implements IGraph<T> {
 	
 	
 	@Override
-	public String SCC() {
-		// TODO @Lucas
-		return null;
+	public Boolean SCC() {
+		// Simple DFS 
+		String resp = "";
+		Stack<Edge<T>> stack = new Stack<>();
+	
+		ArrayList<Vertex<T>> visited = new ArrayList<>();
+		
+		Vertex<T> start_vertex = null;
+		for (Vertex tmp : this.vertex) {
+			start_vertex = tmp;
+		}
+		
+		stack.add(new Edge<T>(start_vertex, start_vertex));
+		visited.add((Vertex<T>) start_vertex);
+		
+		while (!stack.isEmpty()) {
+			Edge<T> v = stack.pop();
+			
+			if (v.getDestination().equals(v.getSource()))
+				resp += v.getDestination() + " - - " + stack.size() + "\n";
+			else
+				resp += v.getDestination() + " - " + v.getSource() + " " + stack.size() + "\n";
+			
+			for (Edge<T> e : v.getDestination().getAdjacencyList()) {
+				if (e.getDestination() != null && !visited.contains(e.getDestination())) {
+					stack.add(e);
+					visited.add(e.getDestination());
+				}
+			}
+			
+		}
+		//Compare if number of visited vertex is equals to total vertex
+		return this.vertex.size() == visited.size();
 	}
 
+	
 	@Override
 	public String shortestPath(Vertex<T> v1, Vertex<T> v2) {
 		// TODO @Ionesio
 		String response = "";
+		//Validate vertex
 		if( this.vertex.contains(v1) && this.vertex.contains(v2)) {
+			
 			Queue<Vertex<T>> vertexQueue = new ArrayDeque<>();
 			ArrayList<Vertex<T>> visited = new ArrayList<>();
 			HashMap<String,String> reversePath = new HashMap<>();
 			v1.relaxDistance(0);
 			vertexQueue.add(v1);
-			
+			//While unprocessed vertex exists ...
 			while(!vertexQueue.isEmpty()) {
 				Vertex<T> currentVertex = vertexQueue.remove();
 				visited.add(currentVertex);
+				
 				for(Edge<T> e : currentVertex.getAdjacencyList()) {
+					
 					if(!visited.contains(e.getDestination())) {
+						//Update distance for adj vertex
 						Vertex<T> nextVertex = e.getDestination();
 						double expectedDistance = currentVertex.getDistance();
 						expectedDistance += e.getWeight();
 						Boolean update = nextVertex.relaxDistance( expectedDistance );
+						//If upgraded, save predecessor
 						if(update) {
 							reversePath.put(nextVertex.getIndex().toString(), currentVertex.getIndex().toString());
 						}

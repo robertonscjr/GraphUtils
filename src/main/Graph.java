@@ -20,9 +20,13 @@ import main.contracts.IGraph;
 import main.structure.components.*;
 import main.structure.components.enums.RepresentationType;
 
-
+/**
+ * Graph representation class</br>
+ * This class represents an simple graph or a weighted graph
+ * 
+ * @param <T>
+ */
 public class Graph <T> implements IGraph<T> {
-	
 
 	private Set<Vertex<T>> vertex;
 	

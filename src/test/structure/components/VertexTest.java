@@ -7,71 +7,61 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
+import main.structure.components.Edge;
+import main.structure.components.Vertex;
 import test.categories.Construction;
 
 public class VertexTest {
 
+	Vertex<Integer> v1;
+	Vertex<Integer> v2;
+	Vertex<Integer> v3;
+	Vertex<Integer> v4;
+	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
 	}
 
 	@Before
 	public void setUp() throws Exception {
-	}
-
-	@Test
-	public void testVertex() {
-		fail("Not yet implemented");
+		v1 = new Vertex<>((long)1);
+		v2 = new Vertex<>((long)2);
+		v3 = new Vertex<>((long)3);
+		v4 = new Vertex<>((long)4);
 	}
 
 	@Test
 	public void testAddEdge() {
-		fail("Not yet implemented");
+		v1.addEdge(new Edge<>(v1,  v2));
+		v1.addEdge(new Edge<>(v2,  v3));
+		v1.addEdge(new Edge<>(v3,  v4));
+		assertEquals("[1-->2, 2-->3, 3-->4]", v1.getAdjacencyList().toArray());
+		
 	}
 
 	@Test
 	public void testRemoveEdge() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetIndex() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetIndex() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetValue() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetValue() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testGetAdjacencyList() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testSetAdjacencyList() {
-		fail("Not yet implemented");
+		Edge<Integer> edge1 = new Edge<>(v1, v2);
+		v1.addEdge(edge1);
+		v1.removeEdge(edge1);
+		assertEquals("[]", v1.getAdjacencyList().toString());
 	}
 
 	@Test
 	public void testGetAdjacencyListRepresentation() {
-		fail("Not yet implemented");
+		v1.addEdge(new Edge<>(v1,  v2));
+		v1.addEdge(new Edge<>(v2,  v3));
+		v1.addEdge(new Edge<>(v3,  v4));
+		v1.getAdjacencyList().toString();
+		assertEquals(" 2 3 4",  v1.getAdjacencyListRepresentation());
 	}
 
 	@Test
 	public void testToString() {
-		fail("Not yet implemented");
+		assertEquals("1", v1.toString());
+		assertEquals("2", v2.toString());
+		assertEquals("3", v3.toString());
+		assertEquals("4", v4.toString());
 	}
 
 }

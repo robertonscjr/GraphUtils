@@ -9,13 +9,14 @@ import main.structure.components.Edge;
  */
 public interface IVertex<T> {
 	
-	/**
+	/** Add some edge in this vertex
 	 * 
 	 * @param edge
 	 */
 	void addEdge(Edge<T> edge);
 	
 	/**
+	 * Remove some edge from this vertex
 	 * 
 	 * @param edge
 	 */

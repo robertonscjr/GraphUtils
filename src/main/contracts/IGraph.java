@@ -95,7 +95,7 @@ public interface IGraph<T> {
 	 * <a href="https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">Dijkstra</a>
 	 * @param vertex1
 	 * @param vertex2
-	 * @return path
+	 * @return boolean
 	 */
 	String shortestPath(Vertex<T> v1, Vertex<T> v2);
 	

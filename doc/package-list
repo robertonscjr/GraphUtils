@@ -1,0 +1,10 @@
+exception
+main
+main.contracts
+main.structure.components
+main.structure.components.enums
+main.structure.contracts
+test
+test.categories
+test.graph
+test.structure.components

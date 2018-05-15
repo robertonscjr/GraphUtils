@@ -87,7 +87,7 @@ public interface IGraph<T> {
 	 * <a href="https://en.wikipedia.org/wiki/Strongly_connected_component">SCC-Wiki</a>
 	 * @return
 	 */
-	String SCC();
+	Boolean SCC();
 	
 	/**
 	 * <a href="https://en.wikipedia.org/wiki/Shortest_path_problem">Shortest Path Problem</a>
